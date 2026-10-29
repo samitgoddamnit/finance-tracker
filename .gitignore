@@ -1,5 +1,2 @@
-# bank statements: real account details, never commit
 data/
-
-# local database credentials; see backend/.env.example
 .env
