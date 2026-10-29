@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:latest
+    # values come from backend/.env, which docker compose reads automatically
+    # (copy .env.example to .env to get started)
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-transactions}
+      - POSTGRES_USER=${POSTGRES_USER:?set POSTGRES_USER in backend/.env}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in backend/.env}
+    ports:
+      - 5432:5432
+  kafka:
+    image: apache/kafka
+    ports:
+      - 9092:9092

@@ -1,0 +1,86 @@
+.transaction {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.transaction-selected {
+  border-color: #777;
+}
+
+.transaction-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #17211b;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.transaction-button:focus-visible {
+  outline: 2px solid #555;
+  outline-offset: 2px;
+}
+
+.transaction-main,
+.transaction-summary {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.transaction-main {
+  flex: 1;
+}
+
+.transaction-main strong,
+.transaction-main small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transaction-main small,
+.transaction-summary small {
+  color: #666;
+}
+
+.transaction-category {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  color: #17211b;
+  font-size: 0.8rem;
+}
+
+.transaction-category-none {
+  border-style: dashed;
+  color: #666;
+}
+
+.transaction-summary {
+  flex-shrink: 0;
+  align-items: flex-end;
+}
+
+@media (max-width: 640px) {
+  .transaction-button {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .transaction-summary {
+    align-items: flex-start;
+  }
+}

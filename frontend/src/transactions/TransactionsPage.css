@@ -1,0 +1,165 @@
+.transactions-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.transactions-header {
+  margin-bottom: 30px;
+}
+
+.transactions-header h1 {
+  margin: 0;
+}
+
+.transactions-eyebrow,
+.transaction-details-label {
+  margin: 0 0 8px;
+}
+
+.transactions-intro {
+  margin: 10px 0 0;
+}
+
+.transactions-upload {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.transactions-upload-button {
+  padding: 10px 16px;
+  border: 1px solid #777;
+  border-radius: 8px;
+  background: #fff;
+  color: #17211b;
+  cursor: pointer;
+  font: inherit;
+}
+
+.transactions-upload-button:hover:not(:disabled) {
+  background: #f3f3f3;
+}
+
+.transactions-upload-button:focus-visible {
+  outline: 2px solid #555;
+  outline-offset: 2px;
+}
+
+.transactions-upload-button:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.transactions-upload-status {
+  margin: 0;
+}
+
+.transactions-upload-success {
+  color: #1d6b3a;
+}
+
+.transactions-upload-error {
+  color: #a3261f;
+}
+
+.transactions-workspace {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.transaction-details {
+  flex: 0 0 36%;
+  min-height: 300px;
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.transaction-details h2 {
+  margin: 24px 0 12px;
+}
+
+.transaction-details-amount {
+  margin: 0;
+  font-weight: 700;
+}
+
+.transaction-details-divider {
+  height: 1px;
+  margin: 24px 0 20px;
+  background: #ddd;
+}
+
+.transaction-details dl {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+}
+
+.transaction-details dt {
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.transaction-details dd {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.transaction-category-select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #777;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+}
+
+.transaction-category-source {
+  display: block;
+  margin-top: 6px;
+  color: #666;
+}
+
+.transaction-details-empty {
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.transaction-details-empty span {
+  color: #777;
+  font-size: 1.5rem;
+}
+
+.transaction-details-empty h2 {
+  margin: 18px 0 8px;
+}
+
+.transaction-details-empty p {
+  max-width: 220px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+  .transactions-workspace {
+    flex-direction: column;
+  }
+
+  .transaction-details,
+  .transaction-list {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .transaction-details {
+    position: static;
+    min-height: 0;
+  }
+}

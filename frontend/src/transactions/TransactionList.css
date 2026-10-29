@@ -1,0 +1,9 @@
+.transaction-list {
+  flex: 1;
+  min-width: 0;
+  max-height: 560px;
+  overflow-y: auto;
+  padding: 0 6px 0 0;
+  margin: 0;
+  list-style: none;
+}

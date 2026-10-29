@@ -1,0 +1,105 @@
+.monthly-summary {
+  max-width: 560px;
+  margin-top: 32px;
+}
+
+.monthly-summary-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.monthly-summary-header h2 {
+  margin: 0;
+}
+
+.monthly-summary-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.monthly-summary-month {
+  min-width: 9.5em;
+  font-weight: 600;
+  text-align: center;
+}
+
+.monthly-summary-step {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid #777;
+  border-radius: 8px;
+  background: #fff;
+  color: #17211b;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.monthly-summary-step:hover:not(:disabled) {
+  background: #f3f3f3;
+}
+
+.monthly-summary-step:focus-visible {
+  outline: 2px solid #555;
+  outline-offset: 2px;
+}
+
+.monthly-summary-step:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.monthly-summary-note,
+.monthly-summary-empty {
+  margin: 0 0 16px;
+  color: #666;
+}
+
+.monthly-summary-table {
+  font-variant-numeric: tabular-nums;
+}
+
+.monthly-summary-table th[scope="row"] {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.monthly-summary-section th {
+  padding-top: 18px;
+  border-bottom: 1px solid #777;
+  color: #17211b;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.monthly-summary-none,
+.monthly-summary-share {
+  color: #666;
+}
+
+.monthly-summary-subtotal th,
+.monthly-summary-subtotal td {
+  font-weight: 700;
+}
+
+.monthly-summary-table tfoot th,
+.monthly-summary-table tfoot td {
+  border-top: 2px solid #777;
+  font-weight: 700;
+}
+
+.monthly-summary-positive {
+  color: #1d6b3a;
+}
+
+.monthly-summary-negative {
+  color: #a3261f;
+}

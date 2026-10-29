@@ -1,0 +1,41 @@
+.sidebar {
+  flex: 0 0 240px;
+  padding: 28px 16px;
+  background: #000000;
+}
+
+.sidebar-brand {
+  margin: 0 12px 36px;
+  color: #fffffe;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 12px;
+  border-radius: 6px;
+  color: #c6d2dc;
+  text-decoration: none;
+}
+
+.sidebar-link:hover,
+.sidebar-link-active {
+  background: #616060;
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    padding: 18px 16px;
+  }
+
+  .sidebar-brand {
+    margin-bottom: 16px;
+  }
+
+  .sidebar nav {
+    display: flex;
+    gap: 8px;
+  }
+}
