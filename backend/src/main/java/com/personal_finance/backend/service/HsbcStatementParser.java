@@ -39,6 +39,7 @@ public class HsbcStatementParser {
 
     public List<Transaction> parse(byte[] pdfBytes) throws IOException {
         List<List<Word>> lines;
+        // loads here
         try (PDDocument document = loadPdf(pdfBytes)) {
             lines = new LineCollector().collect(document);
         }
@@ -73,7 +74,8 @@ public class HsbcStatementParser {
                     case "out" -> paidOutRight = word.right();
                     case "in" -> paidInRight = word.right();
                     case "Balance" -> balanceRight = word.right();
-                    default -> { }
+                    default -> {
+                    }
                 }
             }
             if (typeLeft == null || paidOutRight == null || paidInRight == null || balanceRight == null) {
@@ -106,10 +108,14 @@ public class HsbcStatementParser {
         }
     }
 
-    private enum Column { PAID_OUT, PAID_IN, BALANCE }
+    private enum Column {
+        PAID_OUT, PAID_IN, BALANCE
+    }
 
-    // Walks the table rows. A transaction starts at a payment type code (VIS, ))), BP, CR...),
-    // collects description lines, and ends at its paid out / paid in amount. Rows without a
+    // Walks the table rows. A transaction starts at a payment type code (VIS, ))),
+    // BP, CR...),
+    // collects description lines, and ends at its paid out / paid in amount. Rows
+    // without a
     // date belong to the most recent date above them, even across a page break.
     private static class StatementReader {
         private final List<Transaction> transactions = new ArrayList<>();
@@ -232,8 +238,10 @@ public class HsbcStatementParser {
             }
         }
 
-        // The first detail line is the merchant or payee, except for foreign card payments
-        // ("VIS INT'L 0055962090 / PIXIV INC / TOKYO ..."), where it's a reference number.
+        // The first detail line is the merchant or payee, except for foreign card
+        // payments
+        // ("VIS INT'L 0055962090 / PIXIV INC / TOKYO ..."), where it's a reference
+        // number.
         private static String merchant(List<String> details) {
             if (details.isEmpty()) {
                 return null;
@@ -253,7 +261,8 @@ public class HsbcStatementParser {
         }
     }
 
-    // Collects the words on each line of the PDF, in reading order, with their positions.
+    // Collects the words on each line of the PDF, in reading order, with their
+    // positions.
     private static class LineCollector extends PDFTextStripper {
         private final List<List<Word>> lines = new ArrayList<>();
         private List<Word> line = new ArrayList<>();

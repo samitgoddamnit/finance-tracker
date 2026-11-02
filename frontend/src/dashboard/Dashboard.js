@@ -15,13 +15,6 @@ export default function Dashboard() {
   return (
     <section className="dashboard">
       <h1>Dashboard</h1>
-      <div className="dashboard-boxes">
-        <DashboardBox
-          title={`Spent in ${thisMonth}`}
-          endpoint="/dashboard/spent-this-month"
-          formatValue={(value) => money.format(value)}
-        />
-      </div>
       <MonthlySummary />
     </section>
   );

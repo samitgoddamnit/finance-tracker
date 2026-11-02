@@ -24,8 +24,10 @@ public class TransactionCleaner {
     // payment types where the line after the merchant is a place, not a note
     private static final Set<String> CARD_PAYMENT_TYPES = Set.of("VIS", ")))", "ATM");
 
-    // card processors that put their own name in front: "SQ *ORICHA" is a shop called Oricha
-    // paid through Square. Only removed when followed by "*", so "Google One" stays as it is.
+    // card processors that put their own name in front: "SQ *ORICHA" is a shop
+    // called Oricha
+    // paid through Square. Only removed when followed by "*", so "Google One" stays
+    // as it is.
     private static final Set<String> PROCESSORS = Set.of(
             "SQ", "SUMUP", "NYX", "GOOGLE", "PAYPAL", "ZTL", "IZ", "SP", "PP");
 
@@ -34,8 +36,8 @@ public class TransactionCleaner {
     // "INT'L 0055962090" at the start of foreign card payments
     private static final Pattern FOREIGN_PREFIX = Pattern.compile("^INT'L \\S+\\s*");
     // "JPY 590 @214.5454 Visa Rate" or "USD 6.00 @ 1.3513 Visa Rate"
-    private static final Pattern EXCHANGE_RATE =
-            Pattern.compile("\\b[A-Z]{3} [\\d,.]+ ?@ ?[\\d.]+ Visa Rate\\b", Pattern.CASE_INSENSITIVE);
+    private static final Pattern EXCHANGE_RATE = Pattern.compile("\\b[A-Z]{3} [\\d,.]+ ?@ ?[\\d.]+ Visa Rate\\b",
+            Pattern.CASE_INSENSITIVE);
     private static final Pattern PHONE_NUMBER = Pattern.compile("^\\+?\\d{6,}$");
 
     public void clean(Transaction transaction) {
@@ -77,8 +79,6 @@ public class TransactionCleaner {
             words.remove(words.size() - 1);
         }
         if (words.isEmpty()) {
-            // everything looked like a reference code; a rough name beats no name,
-            // because merchant memory can't remember a merchant without one
             String fallback = merchant.toUpperCase(Locale.ROOT).replaceAll("\s+", " ").strip();
             return fallback.isEmpty() ? null : fallback;
         }
@@ -111,7 +111,8 @@ public class TransactionCleaner {
         return rest.isEmpty() ? null : rest;
     }
 
-    // "COVENTRY 4" -> "COVENTRY"; trainline's "+443332022222" is a phone number, not a place
+    // "COVENTRY 4" -> "COVENTRY"; trainline's "+443332022222" is a phone number,
+    // not a place
     private static String location(String rest) {
         if (rest == null || PHONE_NUMBER.matcher(rest).matches()) {
             return null;

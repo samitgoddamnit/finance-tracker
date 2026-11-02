@@ -101,8 +101,13 @@ export default function MonthlySummary() {
   }
 
   // you can step back to the earliest month with data, and forward to this month
-  const earliest = [summary.months[0], currentMonth()].filter(Boolean).sort()[0];
-  const latest = [summary.months.at(-1), currentMonth()].filter(Boolean).sort().at(-1);
+  const earliest = [summary.months[0], currentMonth()]
+    .filter(Boolean)
+    .sort()[0];
+  const latest = [summary.months.at(-1), currentMonth()]
+    .filter(Boolean)
+    .sort()
+    .at(-1);
 
   const column = summary.months.indexOf(month);
   const inRows = rowsFor(summary.moneyIn, column);
@@ -139,10 +144,6 @@ export default function MonthlySummary() {
           </button>
         </div>
       </div>
-      <p className="monthly-summary-note">
-        Refunds are taken off the category they refund rather than counted as
-        money in.
-      </p>
 
       {inRows.length === 0 && outRows.length === 0 ? (
         <p className="monthly-summary-empty">

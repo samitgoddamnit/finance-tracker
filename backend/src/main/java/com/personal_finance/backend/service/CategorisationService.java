@@ -21,7 +21,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 // Decides each transaction's category. In order:
-//   1. a merchant you've categorised yourself before (MERCHANT)
+//   1. a merchant you've categorised yourself before (USER)
 //   2. a keyword rule from merchant-rules.csv (RULE)
 //   3. the ML service in ml-service/, which answers over Kafka (ML)
 //   4. otherwise it stays Uncategorised (NONE)
@@ -57,7 +57,8 @@ public class CategorisationService {
     // runs on every newly saved transaction
     public void categorise(Transaction transaction) {
         cleaner.clean(transaction);
-        // a category sent in with the transaction (e.g. through POST /transactions) counts as yours
+        // a category sent in with the transaction (e.g. through POST /transactions)
+        // counts as yours
         if (transaction.getCategory() != null && transaction.getCategorySource() == null) {
             transaction.setCategorySource(CategorySource.USER);
             transactions.save(transaction);
@@ -78,9 +79,12 @@ public class CategorisationService {
     }
 
     // You picked a category on the website. Remember it for this merchant,
-    // apply it to the merchant's other transactions, and have the ML service retrain.
-    // (Not one database transaction on purpose: the saves must be committed before the
-    // retrain message goes out, because the ML service reads its training data from the database.)
+    // apply it to the merchant's other transactions, and have the ML service
+    // retrain.
+    // (Not one database transaction on purpose: the saves must be committed before
+    // the
+    // retrain message goes out, because the ML service reads its training data from
+    // the database.)
     public Transaction setByUser(long transactionId, Category category) {
         Transaction transaction = transactions.findById(transactionId)
                 .orElseThrow(() -> new IllegalArgumentException("No transaction with id " + transactionId));
@@ -103,9 +107,12 @@ public class CategorisationService {
         return transaction;
     }
 
-    // Re-cleans every transaction and re-runs merchant matching and rules over everything
-    // you haven't categorised yourself, e.g. after editing merchant-rules.csv or the cleaner.
-    // The ML service then retrains on the result and predicts whatever is still left.
+    // Re-cleans every transaction and re-runs merchant matching and rules over
+    // everything
+    // you haven't categorised yourself, e.g. after editing merchant-rules.csv or
+    // the cleaner.
+    // The ML service then retrains on the result and predicts whatever is still
+    // left.
     public CategorisationSummary recategoriseAll() {
         List<Transaction> all = transactions.findAll();
         for (Transaction transaction : all) {
@@ -135,23 +142,26 @@ public class CategorisationService {
     public record CategorisationSummary(int matchedByMerchantOrRule, int sentToMl) {
     }
 
-    // Merchant memory records your own choices, so it's refreshed from them here. This matters
-    // when the cleaner changes: a merchant's key may come out differently. Entries are only
-    // added or updated, never removed, because your choices outlive their transactions:
-    // after emptying the table and re-uploading, the memory is all that's left of them.
+    // Merchant memory records your own choices, so it's refreshed from them here.
+    // This matters
+    // when the cleaner changes: a merchant's key may come out differently. Entries
+    // are only
+    // added or updated, never removed, because your choices outlive their
+    // transactions:
+    // after emptying the table and re-uploading, the memory is all that's left of
+    // them.
     private void refreshMerchantMemory(List<Transaction> all) {
         all.stream()
                 .filter(transaction -> transaction.getCategorySource() == CategorySource.USER)
                 // later choices win if you categorised the same merchant twice
                 .sorted(Comparator.comparingLong(Transaction::getTransactionID))
-                .forEach(transaction -> matcher.merchantKey(transaction).ifPresent(key ->
-                        merchantCategories.save(new MerchantCategory(key, transaction.getCategory()))));
+                .forEach(transaction -> matcher.merchantKey(transaction).ifPresent(
+                        key -> merchantCategories.save(new MerchantCategory(key, transaction.getCategory()))));
     }
 
-    @KafkaListener(
-            topics = CategorisationMessages.PREDICTIONS_TOPIC,
-            groupId = "categoriser",
-            // the ML service sends plain JSON without Spring's type headers, so parse it ourselves
+    @KafkaListener(topics = CategorisationMessages.PREDICTIONS_TOPIC, groupId = "categoriser",
+            // the ML service sends plain JSON without Spring's type headers, so parse it
+            // ourselves
             properties = "value.deserializer=org.apache.kafka.common.serialization.StringDeserializer")
     public void onPrediction(String message) throws Exception {
         applyPrediction(json.readValue(message, Prediction.class));
@@ -180,7 +190,8 @@ public class CategorisationService {
         boolean moneyIn = transaction.getAmount() != null && transaction.getAmount().signum() > 0;
         if (prediction.confidence() >= confidenceThreshold
                 && category != Category.UNCATEGORISED
-                // e.g. a friend paying you back can't be a "transfer out", however sure the model is
+                // e.g. a friend paying you back can't be a "transfer out", however sure the
+                // model is
                 && category.fitsDirection(moneyIn)) {
             transaction.categorise(category, CategorySource.ML, prediction.confidence());
         } else {
